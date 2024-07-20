@@ -103,12 +103,12 @@ export class LinkedList {
 
 const linkedList = new LinkedList
 
-linkedList.append('A')
-linkedList.append(true)
-linkedList.prepend('first value')
-linkedList.delete(true)
-console.log(linkedList.find('A'));
-linkedList.insertAfter('new value' , true)
+// linkedList.append('A')
+// linkedList.append(true)
+// linkedList.prepend('first value')
+// linkedList.delete(true)
+// console.log(linkedList.find('A'));
+// linkedList.insertAfter('new value' , true)
 
-// 
-console.log(linkedList.toArray());
+// // 
+// console.log(linkedList.toArray());
