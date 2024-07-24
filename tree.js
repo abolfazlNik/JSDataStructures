@@ -34,8 +34,36 @@ class Node {
         }
     }
 
-    removeNode(index) {
-        this.children.splice(index,1) // Remove the child node at the specified index
+    removeNode(value) {
+        const segments = value.split('/')
+
+        if (segments.length === 0) {
+            return // If there are no segments, return early
+        }
+
+        if (segments.length === 1) {
+            const existingNodeIndex = this.children.findIndex((item) => {
+                return item.value === segments[0]
+            })
+
+            if (existingNodeIndex < 0) {
+                throw new Error('Could not find.')
+            }
+
+            this.children.splice(existingNodeIndex , 1)
+        }
+
+        if (segments.length > 1) {
+            const existingChildNode = this.children.find((item) => {
+                return item.value === segments[0]
+            })
+
+            if (!existingChildNode) {
+                throw new Error('Could not find.')
+            }
+
+            existingChildNode.removeNode(segments.slice(1).join('/'))
+        }
     }
 }
 
@@ -47,6 +75,10 @@ class Tree {
     add(path) {
         this.root.addNode(path) // Add a new node to the tree by calling addNode on the root
     }
+
+    remove(path) {
+        this.root.removeNode(path)
+    }
 }
 
 const user = new Tree('root')
@@ -54,5 +86,7 @@ const user = new Tree('root')
 user.add('/userInfo/username/AbolfazlNikfarjam')
 user.add('/cart/book 1')
 user.add('/cart/book 2')
+
+user.remove('/cart/book 2')
 
 console.log(user);
