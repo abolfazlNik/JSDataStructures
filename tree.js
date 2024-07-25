@@ -65,6 +65,27 @@ class Node {
             existingChildNode.removeNode(segments.slice(1).join('/'))
         }
     }
+
+    find(value) {
+        for (const item of this.children) {
+            if (item.value === value) {
+                return item
+            }
+            // Depth-first search for the value in the tree
+            // const nestedChildNode = item.find(value)
+            // if (nestedChildNode) {
+            //     return nestedChildNode
+            // }
+        }
+
+        // Breadth-first search for the value in the tree
+        for (const item of this.children) {
+            const nestedChildNode = item.find(value)
+            if (nestedChildNode) {
+                return nestedChildNode
+            }
+        }
+    }
 }
 
 class Tree {
@@ -79,6 +100,13 @@ class Tree {
     remove(path) {
         this.root.removeNode(path)
     }
+
+    find(value) {
+        if (this.root.value === value) {
+            return this.root
+        }
+        return this.root.find(value) // Otherwise, find the value in the tree
+    }
 }
 
 const user = new Tree('root')
@@ -86,7 +114,8 @@ const user = new Tree('root')
 user.add('/userInfo/username/AbolfazlNikfarjam')
 user.add('/cart/book 1')
 user.add('/cart/book 2')
+user.remove('/cart/book 2') // Remove a node from the tree
 
-user.remove('/cart/book 2')
+console.log(user.find('book 1')); // Find and log the node with the value 'book 1'
 
 console.log(user);
